@@ -1,3 +1,7 @@
+group = "com.github.rudolf.arduino"
+version = "1.0"
+
+
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
