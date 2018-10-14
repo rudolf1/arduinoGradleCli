@@ -1,5 +1,5 @@
 group = "com.github.rudolf.arduino"
-version = "1.0"
+version = "0.2"
 
 
 plugins {

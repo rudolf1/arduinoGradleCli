@@ -19,7 +19,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.github.rudolf1.arduinoGradleCli:build:2665b84692")
+        classpath("com.github.rudolf1.arduinoGradleCli:build:0.1")
     }
 }
 
