@@ -5,12 +5,12 @@ version = "1.0"
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
-    id("maven")
+    `maven-publish`
 }
 
 gradlePlugin {
     plugins {
-        register("com.github.rudolf.arduino") {
+        register("com_github_rudolf_arduino") {
             id = "arduino-cli-plugin"
             implementationClass = "com.github.rudolf.arduino.ArduinoCliPlugin"
         }
@@ -27,16 +27,8 @@ dependencies {
     compile("commons-io", "commons-io", "2.6")
 }
 
-pluginBundle {
-    website = "https://github.com/rudolf1/arduinoGradleCli"
-    vcsUrl = "https://github.com/rudolf1/arduinoGradleCli"
-    description = "A gradle plugin for compiling sketch with ardiono-cli"
-    tags = listOf("gradle", "gradle-plugin", "arduino", "arduino-cli")
-
-    plugins {
-        register("arduino-cli-plugin") {
-            id = "arduino-cli-plugin"
-            displayName = "Gradle Arduino CLIE plugin"
-        }
+publishing {
+    repositories {
+        maven(url = "build/repository")
     }
 }
