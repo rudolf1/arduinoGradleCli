@@ -5,7 +5,7 @@ version = "1.0"
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
-    id("maven-publish")
+    id("maven")
 }
 
 gradlePlugin {
