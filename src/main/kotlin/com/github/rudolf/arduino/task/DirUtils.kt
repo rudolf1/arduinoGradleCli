@@ -16,8 +16,8 @@ fun AbstractTask.extract(src: File, dest: File) {
 }
 
 fun AbstractTask.findDirWithContent(dest: File): File {
-    val childs = dest.listFiles()
-    if (childs.isNotEmpty() && childs.size == 1 && childs.first().isDirectory) {
+    val childs: Array<out File>? = dest.listFiles()
+    if (childs != null && childs.isNotEmpty() && childs.size == 1 && childs.first().isDirectory) {
         return findDirWithContent(childs.first())
     }
     return dest

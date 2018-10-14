@@ -19,6 +19,7 @@ open class Install : DefaultTask() {
 
     @TaskAction
     fun action() {
+        println("Install start")
 
         val ext = when (OS.current) {
             OS.linux64 -> "tar.bz2"
@@ -38,9 +39,15 @@ open class Install : DefaultTask() {
         project.dependencies.add("arduinoCli", dependencyNotation)
 
         val depsConfig = project.configurations.getByName("arduinoCli")
-        val files = depsConfig.files.firstOrNull { it.name.contains("arduino-cli") }
+        val files = depsConfig.files.firstOrNull { it.name.contains(arduinoExt.cliVersion) }
+        println("Ide path ${idePath.absolutePath}, files ${files}")
+        println("DepsFiles ${depsConfig.files.map { it.name }}")
         if (!idePath.exists() && files != null) {
+            println("Install start")
             extract(files, idePath)
+        } else {
+            println("Not downloading ${idePath.exists()}, ${files}")
+
         }
         val workingDir = findDirWithContent(idePath)
         val executable = workingDir.listFiles().first()
@@ -56,12 +63,13 @@ open class Install : DefaultTask() {
         println("Compiling sketches")
         arduinoExt.sketches.forEach { sketch ->
 
-            println("Compiling $sketch")
+            val sketchFullPath = File(project.projectDir, sketch.path).absolutePath
+            println("Compiling $sketch @ $sketchFullPath")
             val outputDir = File(project.buildDir, "${sketch.path}_${sketch.board}")
             val cacheDir = File(project.buildDir, "${sketch.path}_${sketch.board}_cache")
             outputDir.mkdirs()
 
-            executable.exec("compile", "--fqbn", sketch.board, File(project.rootDir, sketch.path).absolutePath,
+            executable.exec("compile", "--fqbn", sketch.board, sketchFullPath,
                     "--build-path", outputDir.absolutePath,
                     "--build-cache-path", cacheDir.absolutePath
             )
