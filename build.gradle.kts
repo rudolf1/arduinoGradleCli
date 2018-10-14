@@ -11,7 +11,7 @@ plugins {
 gradlePlugin {
     plugins {
         register("com.github.rudolf.arduino") {
-            id = "arduino-plugin"
+            id = "arduino-cli-plugin"
             implementationClass = "com.github.rudolf.arduino.ArduinoCliPlugin"
         }
     }
@@ -27,25 +27,16 @@ dependencies {
     compile("commons-io", "commons-io", "2.6")
 }
 
-//pluginBundle {
-//    website = "https://github.com/zhurlik"
-//    vcsUrl = "https://github.com/zhurlik/gradle-arduino-plugin"
-//    description = "A gradle plugin for using Arduino IDE in the gradle projects"
-//    tags = listOf("gradle", "gradle-plugin", "arduino", "arduino-ide")
-//
-//    plugins {
-//        register("arduinoPlugin") {
-//            id = "com.github.zhurlik.arduino"
-//            displayName = "Gradle Arduino IDE plugin"
-//        }
-//    }
-//}
+pluginBundle {
+    website = "https://github.com/rudolf1/arduinoGradleCli"
+    vcsUrl = "https://github.com/rudolf1/arduinoGradleCli"
+    description = "A gradle plugin for compiling sketch with ardiono-cli"
+    tags = listOf("gradle", "gradle-plugin", "arduino", "arduino-cli")
 
-//// for local testing
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url = uri("tmp-repo"))
-//        }
-//    }
-//}
+    plugins {
+        register("arduino-cli-plugin") {
+            id = "arduino-cli-plugin"
+            displayName = "Gradle Arduino CLIE plugin"
+        }
+    }
+}
