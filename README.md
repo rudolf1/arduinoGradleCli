@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/rudolf1/arduinoGradleCli.svg)](https://jitpack.io/#rudolf1/arduinoGradleCli)
 
-This repository contains [Gradle](https://gradle.org/) plugin to compile Arduino sketched using [Arduino cli](https://github.com/arduino/arduino-cli)
+This repository contains [Gradle](https://gradle.org/) plugin to compile Arduino sketches using [Arduino cli](https://github.com/arduino/arduino-cli)
 
 # Appying the Plugin <a name="applying"></a>
 
@@ -56,3 +56,8 @@ Also, you can read how to find [libraries](https://github.com/arduino/arduino-cl
 - Task to execute arduino-cli with any bunch of arguments
 
 - Additional compilation parameters
+
+- Distribute via gradle plugin portal
+
+- Move compiled binaries to **build** directory
+
