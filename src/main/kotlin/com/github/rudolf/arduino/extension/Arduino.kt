@@ -1,5 +1,12 @@
 package com.github.rudolf.arduino.extension
 
+import org.gradle.api.Project
+import java.io.File
+
+
+val PROJECT: Project.() -> File = { this.buildDir }
+val GRADLE_HOME: Project.() -> File = { this.gradle.gradleUserHomeDir!! }
+
 open class Arduino {
 
     data class Sketch(val path: String, val board: String)
@@ -7,6 +14,7 @@ open class Arduino {
     data class Dependency(val name: String, val version: String?)
 
     public var cliVersion = "0.3.1-alpha.preview"
+    public var installDirectory: Project.() -> File = GRADLE_HOME
 
     internal val additionalBoards = mutableListOf<String>()
     internal val sketches = mutableListOf<Sketch>()

@@ -14,8 +14,8 @@ import java.nio.file.Files
 
 open class Install : DefaultTask() {
 
-    private var idePath = File(project.buildDir, "arduino-cli")
     private val arduinoExt = project.extensions.getByType(Arduino::class.java)
+    private var idePath = File(project.(arduinoExt.installDirectory)(), "arduino-cli-${arduinoExt.cliVersion}")
 
     @TaskAction
     fun action() {
@@ -34,11 +34,9 @@ open class Install : DefaultTask() {
 
         println("Dependency $dependencyNotation")
 
-        project.configurations.create("arduinoCli")
-
+        val depsConfig = project.configurations.create("arduinoCli")
         project.dependencies.add("arduinoCli", dependencyNotation)
 
-        val depsConfig = project.configurations.getByName("arduinoCli")
         val files = depsConfig.files.firstOrNull { it.name.contains(arduinoExt.cliVersion) }
         println("Ide path ${idePath.absolutePath}, files ${files}")
         println("DepsFiles ${depsConfig.files.map { it.name }}")
@@ -50,7 +48,7 @@ open class Install : DefaultTask() {
 
         }
         val workingDir = findDirWithContent(idePath)
-        val executable = workingDir.listFiles().first()
+        val executable = workingDir.listFiles().first { it.name.contains(arduinoExt.cliVersion) }
 
         println("Generating config")
         Files.write(File(workingDir, "config.yml").toPath(), generateConfig(arduinoExt.additionalBoards).toByteArray())
