@@ -51,7 +51,7 @@ open class Install : DefaultTask() {
         val executable = workingDir.listFiles().first { it.name.contains(arduinoExt.cliVersion) }
 
         println("Generating config")
-        Files.write(File(workingDir, "config.yml").toPath(), generateConfig(arduinoExt.additionalBoards).toByteArray())
+        Files.write(File(workingDir, "config.yml").toPath(), generateConfig(workingDir, arduinoExt.additionalBoards).toByteArray())
 
         executable.exec("config", "dump")
 
@@ -63,8 +63,8 @@ open class Install : DefaultTask() {
 
             val sketchFullPath = File(project.projectDir, sketch.path).absolutePath
             println("Compiling $sketch @ $sketchFullPath")
-            val outputDir = File(project.buildDir, "${sketch.path}_${sketch.board}")
-            val cacheDir = File(project.buildDir, "${sketch.path}_${sketch.board}_cache")
+            val outputDir = File(project.buildDir, "${sketch.path}_${sketch.board}".replace(":","_"))
+            val cacheDir = File(project.buildDir, "${sketch.path}_${sketch.board}_cache".replace(":","_"))
             outputDir.mkdirs()
 
             executable.exec("compile", "--fqbn", sketch.board, sketchFullPath,

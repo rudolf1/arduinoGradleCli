@@ -19,7 +19,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.github.rudolf1.arduinoGradleCli:build:0.1")
+        classpath("com.github.rudolf1.arduinoGradleCli:build:0.3")
     }
 }
 
@@ -62,4 +62,6 @@ Also, you can read how to find [libraries](https://github.com/arduino/arduino-cl
 - Move compiled binaries to **build** directory
 
 - Add example
+
+- Clean task 
 
