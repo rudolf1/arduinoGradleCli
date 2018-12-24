@@ -50,3 +50,9 @@ fun AbstractTask.unxz(src: File, dest: File) {
     }
     project.delete(tmp)
 }
+
+fun String.preparePath() =
+        this
+                .replace(":","_")
+                .replace(",", "_")
+                .replace("=","_")
