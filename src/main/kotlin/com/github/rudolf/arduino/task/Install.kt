@@ -63,8 +63,8 @@ open class Install : DefaultTask() {
 
             val sketchFullPath = File(project.projectDir, sketch.path).absolutePath
             println("Compiling $sketch @ $sketchFullPath")
-            val outputDir = File(project.buildDir, "${sketch.path}_${sketch.board}".replace(":","_"))
-            val cacheDir = File(project.buildDir, "${sketch.path}_${sketch.board}_cache".replace(":","_"))
+            val outputDir = File(project.buildDir, "${sketch.path}_${sketch.board}".replace(":","_").replace(",", "_"))
+            val cacheDir = File(project.buildDir, "${sketch.path}_${sketch.board}_cache".replace(":","_").replace(",", "_"))
             outputDir.mkdirs()
 
             executable.exec("compile", "--fqbn", sketch.board, sketchFullPath,
