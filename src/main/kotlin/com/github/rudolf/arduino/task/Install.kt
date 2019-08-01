@@ -48,7 +48,7 @@ open class Install : DefaultTask() {
 
         }
         val workingDir = findDirWithContent(idePath)
-        val executable = workingDir.listFiles().first { it.name.contains(arduinoExt.cliVersion) }
+        val executable = workingDir.listFiles().first { it.name.startsWith("arduino-cli") }
 
         println("Generating config")
         Files.write(File(workingDir, "config.yml").toPath(), generateConfig(workingDir, arduinoExt.additionalBoards).toByteArray())
