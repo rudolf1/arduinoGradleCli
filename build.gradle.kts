@@ -1,6 +1,5 @@
 group = "com.github.rudolf.arduino"
-version = "0.2"
-
+version = "0.8"
 
 plugins {
     `kotlin-dsl`
@@ -23,8 +22,9 @@ repositories {
 }
 
 dependencies {
-    compile("org.apache.ant", "ant-compress", "1.5")
-    compile("commons-io", "commons-io", "2.6")
+    implementation("de.undercouch", "gradle-download-task", "4.0.4")
+    implementation("org.apache.ant", "ant-compress", "1.5")
+    implementation("commons-io", "commons-io", "2.6")
 }
 
 publishing {
