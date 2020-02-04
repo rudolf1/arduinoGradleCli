@@ -48,7 +48,7 @@ open class InstallCli : DefaultTask() {
             println("Unpack ide")
             extract(files, idePath)
         } else {
-            println("Not downloading ${idePath.exists()}, ${files}")
+            println("Skip download ${files}")
 
         }
         val workingDir = findDirWithContent(idePath)
@@ -56,7 +56,7 @@ open class InstallCli : DefaultTask() {
         val executable = workingDir.listFiles().first { it.name.contains("arduino-cli") }
 
         println("Generating config")
-        Files.write(File(workingDir, "config.yml").toPath(), generateConfig(arduinoExt.additionalBoards).toByteArray())
+        Files.write(File(workingDir, "arduino-cli.yaml").toPath(), generateConfig().toByteArray())
 
         executable.exec(this.project, "config", "dump")
 

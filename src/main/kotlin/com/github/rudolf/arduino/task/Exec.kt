@@ -19,8 +19,6 @@ fun File.exec(project: Project, vararg f: String): String {
         commandLine(this@exec.absolutePath)
         workingDir(this@exec.parentFile.absolutePath)
         val args = arduinoExt.additionalBoards.flatMap { listOf("--additional-urls", it)  }
-//                    .plus("--config-file")
-//                    .plus("./config.yml")
                 .plus("--verbose")
                 .plus(f)
         args(args)
