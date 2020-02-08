@@ -8,6 +8,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.process.internal.ExecException
+import org.gradle.work.InputChanges
 import java.io.File
 import java.net.URL
 import java.nio.file.Files
@@ -25,7 +26,7 @@ open class InstallCli : DefaultTask() {
     var idePath = File(parent, "arduino-cli-${arduinoExt.cliVersion}")
 
     @TaskAction
-    fun action() {
+    fun action(inputs: InputChanges) {
         println("Install start")
 
         val ext = OS.current.extension
@@ -43,17 +44,15 @@ open class InstallCli : DefaultTask() {
         gt.execute()
 
         println("Ide path ${idePath.absolutePath}, files ${files}")
-
-        if (!idePath.exists()) {
-            println("Unpack ide")
+        if (idePath.walkTopDown().none(cliCondition)) {
+            println("Unpack ide $files to $idePath")
             extract(files, idePath)
         } else {
-            println("Skip download ${files}")
-
+            println("Ide already extracted ${files}")
         }
-        val workingDir = findDirWithContent(idePath)
+        val executable = idePath.walkTopDown().first(cliCondition)
+        val workingDir = executable.parentFile
         println("Working dir ${workingDir}")
-        val executable = workingDir.listFiles().first { it.name.contains("arduino-cli") }
 
         println("Generating config")
         Files.write(File(workingDir, "arduino-cli.yaml").toPath(), generateConfig().toByteArray())

@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.charset.Charset
 
+val cliCondition: (File) -> Boolean = { it.name == "arduino-cli" && it.isFile }
+
 fun File.exec(project: Project, vararg f: String): String {
     val arduinoExt = project.extensions.getByType(Arduino::class.java)
 

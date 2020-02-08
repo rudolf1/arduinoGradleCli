@@ -33,7 +33,7 @@ open class ArduinoCompile : SourceTask() {
         collectedSources.delete()
         println("Compiling sketches ${sources}")
         sources.visit {
-            this.copyTo(File(collectedSources, this.name))
+            this.copyTo(File(collectedSources, this.relativePath.pathString))
         }
         arduinoExt.sketches.forEach { sketch ->
 
@@ -43,9 +43,7 @@ open class ArduinoCompile : SourceTask() {
             val cacheDir = File(project.buildDir, "output_${board}_cache")
             outputDir.mkdirs()
 
-            val workingDir = findDirWithContent(idePath)
-            println("Working dir ${workingDir}")
-            val executable = workingDir.listFiles().first { it.name.contains("arduino-cli") }
+            val executable = idePath.walkTopDown().first(cliCondition)
             executable.exec(this.project,
                     "compile", "--fqbn", sketch.fqdn, collectedSources.absolutePath,
                     "--build-path", outputDir.absolutePath,

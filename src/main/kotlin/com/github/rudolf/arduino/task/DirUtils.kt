@@ -17,14 +17,6 @@ fun AbstractTask.extract(src: File, dest: File) {
     }
 }
 
-fun AbstractTask.findDirWithContent(dest: File): File {
-    val childs: Array<out File>? = dest.listFiles()
-    if (childs != null && childs.isNotEmpty() && childs.size == 1 && childs.first().isDirectory) {
-        return findDirWithContent(childs.first())
-    }
-    return dest
-}
-
 fun AbstractTask.unzip(src: File, dest: File) {
     project.copy {
         from(project.zipTree(src))
